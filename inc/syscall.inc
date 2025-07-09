@@ -2,6 +2,15 @@
 
 %define O_RDONLY 0
 %define O_RDWR   2
+
+%macro sys_write 3  
+    mov     rax, 1
+    mov     rdi, %1
+    mov     rsi, %2
+    mov     rdx, %3
+    syscall
+%endmacro
+
 %macro sys_exit 1
     mov     rax, 60
     mov     rdi, %1

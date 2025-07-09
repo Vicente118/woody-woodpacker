@@ -7,10 +7,10 @@ LDFLAGS = -m elf_x86_64
 
 SRC_DIR = src
 OBJ_DIR = obj
-INCLUDE_DIR = include
+INCLUDE_DIR = inc
 
-SRC = $(wildcard $(SRC_DIR)/*.asm)
-OBJ = $(patsubst $(SRC_DIR)/%.asm, $(OBJ_DIR)/%.o, $(SRC))
+SRC = $(wildcard $(SRC_DIR)/*.s)
+OBJ = $(patsubst $(SRC_DIR)/%.s, $(OBJ_DIR)/%.o, $(SRC))
 
 
 all: $(NAME)
@@ -22,7 +22,7 @@ $(NAME): $(OBJ_DIR) $(OBJ)
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.asm
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.s
 	$(NASM) $(NASMFLAGS) -I $(INCLUDE_DIR)/ -o $@ $<
 
 clean:

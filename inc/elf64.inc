@@ -55,6 +55,14 @@ endstruc
 %define EI_PAD      9         ; Start of padding bytes
 %define EI_NIDENT   16        ; Size of e_ident[]
 
+%define e_type      0x10
+
+%define BIT32       0x1
+%define BIT64       0x2
+
+%define LENDIAN     1
+%define BENDIAN     2
+
 ; ELF Magic Numbers
 %define ELFMAG0     0x7F      ; e_ident[EI_MAG0]
 %define ELFMAG1     'E'       ; e_ident[EI_MAG1]
@@ -74,3 +82,7 @@ endstruc
 %define PF_X        0x1       ; Executable
 %define PF_W        0x2       ; Writable
 %define PF_R        0x4       ; Readable
+
+; Object File Types
+%define ET_EXEC     0x2
+%define ET_DYN      0x3
