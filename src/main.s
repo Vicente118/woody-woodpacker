@@ -10,6 +10,7 @@ extern find_code_segment
 extern generate_tea_key
 extern get_tea_key
 extern tea_encrypt_block
+extern encrypt_code_segment
 
 ; Set variables to global
 global original_entry
@@ -22,25 +23,24 @@ global code_segment_offset
 global code_segment_size
 global code_segment_vaddr
 global injection_point
-global tea_key
+global file_ptr
 
 section .bss
-    argc:               resq 1 ; Number of Arguments
-    argv:               resq 1 ; Arguments
-    fd:                 resq 1 ; File descriptor
-    file_size:          resq 1 ; File size
-    file_ptr:           resq 1 ; Pointer to the file mapped in memory
-    original_entry:     resq 1 ; Entrypoint
-    phdr_offset         resq 1
-    phdr_count          resq 1
-    phdr_size           resq 1
-    shdr_offset         resq 1
-    shdr_count          resq 1
-    code_segment_offset resq 1
-    code_segment_size   resq 1
-    code_segment_vaddr  resq 1
-    injection_point     resq 1
-    tea_key             resb 16 ; Random 16 bytes key
+    argc:                resq 1 ; Number of Arguments
+    argv:                resq 1 ; Arguments
+    fd:                  resq 1 ; File descriptor
+    file_size:           resq 1 ; File size
+    file_ptr:            resq 1 ; Pointer to the file mapped in memory
+    original_entry:      resq 1 ; Entrypoint
+    phdr_offset:         resq 1
+    phdr_count:          resq 1
+    phdr_size:           resq 1
+    shdr_offset:         resq 1
+    shdr_count:          resq 1
+    code_segment_offset: resq 1
+    code_segment_size:   resq 1
+    code_segment_vaddr:  resq 1
+    injection_point:     resq 1
 
 section .data 
 
@@ -80,17 +80,17 @@ _start:
     mov     [file_ptr], rax         ; Store file pointer to file_ptr
 
     ;; Validate ELF file
-    mov     rdi, file_ptr           ; Prepare rdi with file pointer
+    lea     rdi, [file_ptr]           ; Prepare rdi with file pointer
     call    validate_elf            ; Call to validate_elf
     test    rax, rax
     jnz     .exit_failure
 
     ;; Parse ELF File
-    mov     rdi, file_ptr
+    lea     rdi, [file_ptr]
     call    parse_elf_headers
 
     ;; Find code segment offset
-    mov     rdi, file_ptr
+    lea     rdi, [file_ptr]
     call    find_code_segment
     test    rax, rax
     jnz     .exit_failure
@@ -99,10 +99,7 @@ _start:
     test    rax, rax
     jnz     .exit_failure
 
-    call    get_tea_key            ; Store the key in tea_key
-    mov     [tea_key], rax
-
-
+    call    encrypt_code_segment   ; Encrypt the whole code segment
 
 .close_file:
     sys_close [fd]                  ; Close fd

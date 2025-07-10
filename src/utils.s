@@ -3,12 +3,14 @@ bits 64
 %include "inc/syscall.inc"
 
 
+
 global generate_tea_key
 global get_tea_key
+global tea_key 
 
 
 section .bss
-    tea_key: resq 2     ; 2 times 8 bytes for the key (TEA uses 128 bits key)
+    tea_key:      resb 16   ; Random 16 bytes key
 
 section .data
     urandom_path: db "/dev/urandom", 0

@@ -1,0 +1,212 @@
+
+test:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+0000000000001000 <_init>:
+    1000:	97                   	xchg   %eax,%edi
+    1001:	7b de                	jnp    fe1 <__abi_tag+0xc55>
+    1003:	15 1a 4b ea b5       	adc    $0xb5ea4b1a,%eax
+    1008:	65 a5                	movsl  %gs:(%rsi),%es:(%rdi)
+    100a:	84 8a f0 5f 30 ce    	test   %cl,-0x31cfa010(%rdx)
+    1010:	4d 10 f7             	rex.WRB adc %r14b,%r15b
+    1013:	58                   	pop    %rax
+    1014:	05 e4 73 3f d0       	add    $0xd03f73e4,%eax
+    1019:	ac                   	lods   %ds:(%rsi),%al
+    101a:	31                   	.byte 0x31
+
+Disassembly of section .plt:
+
+0000000000001020 <.plt>:
+    1020:	65 a2 3a e7 52 d1 ec 	movabs %al,%gs:0xf4f457ecd152e73a
+    1027:	57 f4 f4 
+    102a:	39 90 ce 39 0f 0b    	cmp    %edx,0xb0f39ce(%rax)
+    1030:	57                   	push   %rdi
+    1031:	08 4b 50             	or     %cl,0x50(%rbx)
+    1034:	88 54 87 54          	mov    %dl,0x54(%rdi,%rax,4)
+    1038:	ad                   	lods   %ds:(%rsi),%eax
+    1039:	88 08                	mov    %cl,(%rax)
+    103b:	8d                   	(bad)  
+    103c:	fd                   	std    
+    103d:	c4                   	.byte 0xc4
+    103e:	d6                   	(bad)  
+    103f:	8a                   	.byte 0x8a
+
+Disassembly of section .plt.got:
+
+0000000000001040 <.plt.got>:
+    1040:	85 16                	test   %edx,(%rsi)
+    1042:	c7                   	(bad)  
+    1043:	18 22                	sbb    %ah,(%rdx)
+    1045:	16                   	(bad)  
+    1046:	b1 72                	mov    $0x72,%cl
+    1048:	bd 16 79 84 9b       	mov    $0x9b847916,%ebp
+    104d:	7e 70                	jle    10bf <deregister_tm_clones+0x2f>
+    104f:	1a                   	.byte 0x1a
+
+Disassembly of section .plt.sec:
+
+0000000000001050 <.plt.sec>:
+    1050:	6a c0                	push   $0xffffffffffffffc0
+    1052:	6a 2a                	push   $0x2a
+    1054:	6d                   	insl   (%dx),%es:(%rdi)
+    1055:	83 8a 66 bd 16 79 84 	orl    $0xffffff84,0x7916bd66(%rdx)
+    105c:	9b                   	fwait
+    105d:	7e 70                	jle    10cf <register_tm_clones+0xf>
+    105f:	1a                   	.byte 0x1a
+
+Disassembly of section .text:
+
+0000000000001060 <_start>:
+    1060:	7a 29                	jp     108b <_start+0x2b>
+    1062:	50                   	push   %rax
+    1063:	ae                   	scas   %es:(%rdi),%al
+    1064:	42 79 41             	rex.X jns 10a8 <deregister_tm_clones+0x18>
+    1067:	9b                   	fwait
+    1068:	2f                   	(bad)  
+    1069:	2f                   	(bad)  
+    106a:	4c 1e                	rex.WR (bad) 
+    106c:	72 8a                	jb     ff8 <__abi_tag+0xc6c>
+    106e:	39 0b                	cmp    %ecx,(%rbx)
+    1070:	8d 75 a7             	lea    -0x59(%rbp),%esi
+    1073:	56                   	push   %rsi
+    1074:	33 9c 52 3a f4 cc 4d 	xor    0x4dccf43a(%rdx,%rdx,2),%ebx
+    107b:	ab                   	stos   %eax,%es:(%rdi)
+    107c:	a0 d3 7a 8c 58 54 55 	movabs 0xbd6b5554588c7ad3,%al
+    1083:	6b bd 
+    1085:	d9 b8 d0 8d fd 15    	fnstcw 0x15fd8dd0(%rax)
+    108b:	f5                   	cmc    
+    108c:	82                   	(bad)  
+    108d:	0b 75 d9             	or     -0x27(%rbp),%esi
+
+0000000000001090 <deregister_tm_clones>:
+    1090:	58                   	pop    %rax
+    1091:	d0 e4                	shl    %ah
+    1093:	df 89 51 0a 8f 5b    	fisttps 0x5b8f0a51(%rcx)
+    1099:	76 0a                	jbe    10a5 <deregister_tm_clones+0x15>
+    109b:	48 01 7c 74 f7       	add    %rdi,-0x9(%rsp,%rsi,2)
+    10a0:	b0 28                	mov    $0x28,%al
+    10a2:	78 d1                	js     1075 <_start+0x15>
+    10a4:	7f 87                	jg     102d <_init+0x2d>
+    10a6:	1f                   	(bad)  
+    10a7:	61                   	(bad)  
+    10a8:	02 d5                	add    %ch,%dl
+    10aa:	d0 bf e2 25 ad c2    	sarb   -0x3d52da1e(%rdi)
+    10b0:	46 22 33             	rex.RX and (%rbx),%r14b
+    10b3:	e2 1c                	loop   10d1 <register_tm_clones+0x11>
+    10b5:	e3 97                	jrcxz  104e <_init+0x4e>
+    10b7:	ae                   	scas   %es:(%rdi),%al
+    10b8:	61                   	(bad)  
+    10b9:	f1                   	int1   
+    10ba:	7a 99                	jp     1055 <_init+0x55>
+    10bc:	61                   	(bad)  
+    10bd:	d7                   	xlat   %ds:(%rbx)
+    10be:	60                   	(bad)  
+    10bf:	27                   	(bad)  
+
+00000000000010c0 <register_tm_clones>:
+    10c0:	ec                   	in     (%dx),%al
+    10c1:	e3 25                	jrcxz  10e8 <register_tm_clones+0x28>
+    10c3:	95                   	xchg   %eax,%ebp
+    10c4:	62                   	(bad)  
+    10c5:	8c c7                	mov    %es,%edi
+    10c7:	28 20                	sub    %ah,(%rax)
+    10c9:	84 b4 ef a2 6c 0a 50 	test   %dh,0x500a6ca2(%rdi,%rbp,8)
+    10d0:	da 26                	fisubl (%rsi)
+    10d2:	9b                   	fwait
+    10d3:	57                   	push   %rdi
+    10d4:	a5                   	movsl  %ds:(%rsi),%es:(%rdi)
+    10d5:	09 8e e4 b0 1d f9    	or     %ecx,-0x6e24f1c(%rsi)
+    10db:	40 5a                	rex pop %rdx
+    10dd:	47 c6                	rex.RXB (bad) 
+    10df:	d7                   	xlat   %ds:(%rbx)
+    10e0:	7d 33                	jge    1115 <__do_global_dtors_aux+0x15>
+    10e2:	7b 72                	jnp    1156 <main+0xd>
+    10e4:	7a 5d                	jp     1143 <frame_dummy+0x3>
+    10e6:	9a                   	(bad)  
+    10e7:	d9 f5                	fprem1 
+    10e9:	0c c9                	or     $0xc9,%al
+    10eb:	29 92 85 42 2a 67    	sub    %edx,0x672a4285(%rdx)
+    10f1:	6f                   	outsl  %ds:(%rsi),(%dx)
+    10f2:	3e 07                	ds (bad) 
+    10f4:	02 e0                	add    %al,%ah
+    10f6:	e2 21                	loop   1119 <__do_global_dtors_aux+0x19>
+    10f8:	61                   	(bad)  
+    10f9:	f1                   	int1   
+    10fa:	7a 99                	jp     1095 <deregister_tm_clones+0x5>
+    10fc:	61                   	(bad)  
+    10fd:	d7                   	xlat   %ds:(%rbx)
+    10fe:	60                   	(bad)  
+    10ff:	27                   	(bad)  
+
+0000000000001100 <__do_global_dtors_aux>:
+    1100:	2d c3 ad 93 48       	sub    $0x4893adc3,%eax
+    1105:	8c 14 af             	mov    %ss,(%rdi,%rbp,4)
+    1108:	ec                   	in     (%dx),%al
+    1109:	4c 57                	rex.WR push %rdi
+    110b:	46 07                	rex.RX (bad) 
+    110d:	f0 02 70 b6          	lock add -0x4a(%rax),%dh
+    1111:	17                   	(bad)  
+    1112:	a6                   	cmpsb  %es:(%rdi),%ds:(%rsi)
+    1113:	c7                   	(bad)  
+    1114:	16                   	(bad)  
+    1115:	91                   	xchg   %eax,%ecx
+    1116:	e5 e4                	in     $0xe4,%eax
+    1118:	c4                   	(bad)  
+    1119:	9d                   	popf   
+    111a:	93                   	xchg   %eax,%ebx
+    111b:	70 e9                	jo     1106 <__do_global_dtors_aux+0x6>
+    111d:	5c                   	pop    %rsp
+    111e:	4b 9c                	rex.WXB pushf 
+    1120:	a1 58 ff d7 2d c6 d0 	movabs 0x7e56d0c62dd7ff58,%eax
+    1127:	56 7e 
+    1129:	3f                   	(bad)  
+    112a:	6d                   	insl   (%dx),%es:(%rdi)
+    112b:	23 8e 1d 6a 32 7e    	and    0x7e326a1d(%rsi),%ecx
+    1131:	5e                   	pop    %rsi
+    1132:	bc 40 9e 02 b9       	mov    $0xb9029e40,%esp
+    1137:	cb                   	lret   
+    1138:	61                   	(bad)  
+    1139:	f1                   	int1   
+    113a:	7a 99                	jp     10d5 <register_tm_clones+0x15>
+    113c:	61                   	(bad)  
+    113d:	d7                   	xlat   %ds:(%rbx)
+    113e:	60                   	(bad)  
+    113f:	27                   	(bad)  
+
+0000000000001140 <frame_dummy>:
+    1140:	d2 26                	shlb   %cl,(%rsi)
+    1142:	69 f1 fd b4 bf 37    	imul   $0x37bfb4fd,%ecx,%esi
+    1148:	67                   	addr32
+
+0000000000001149 <main>:
+    1149:	f0 14 39             	lock adc $0x39,%al
+    114c:	75 dd                	jne    112b <__do_global_dtors_aux+0x2b>
+    114e:	95                   	xchg   %eax,%ebp
+    114f:	3a ed                	cmp    %ch,%ch
+    1151:	07                   	(bad)  
+    1152:	0c f6                	or     $0xf6,%al
+    1154:	73 97                	jae    10ed <register_tm_clones+0x2d>
+    1156:	00 0e                	add    %cl,(%rsi)
+    1158:	75 fb                	jne    1155 <main+0xc>
+    115a:	9d                   	popf   
+    115b:	91                   	xchg   %eax,%ecx
+    115c:	fd                   	std    
+    115d:	90                   	nop
+    115e:	27                   	(bad)  
+    115f:	7c 36                	jl     1197 <_fini+0x2f>
+    1161:	c3                   	ret    
+    1162:	33                   	.byte 0x33
+    1163:	a0                   	.byte 0xa0
+    1164:	1c 87                	sbb    $0x87,%al
+    1166:	32                   	.byte 0x32
+
+Disassembly of section .fini:
+
+0000000000001168 <_fini>:
+    1168:	97                   	xchg   %eax,%edi
+    1169:	7b de                	jnp    1149 <main>
+    116b:	15 1a 4b ea b5       	adc    $0xb5ea4b1a,%eax
+    1170:	48 83 c4 08          	add    $0x8,%rsp
+    1174:	c3                   	ret    
