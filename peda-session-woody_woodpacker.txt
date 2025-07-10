@@ -1,2 +1,2 @@
-break encrypt_code_segment
+break _start
 

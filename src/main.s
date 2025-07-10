@@ -101,6 +101,8 @@ _start:
 
     call    encrypt_code_segment   ; Encrypt the whole code segment
 
+    ;; Need to inject stub for decryption and modify entrypoint :)
+
 .close_file:
     sys_close [fd]                  ; Close fd
 

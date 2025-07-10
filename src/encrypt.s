@@ -124,11 +124,6 @@ encrypt_code_segment:
     ret
 
 
-
-
-
-
-
 ; uint32_t KEY[4];  // Key space for bit shifts
 
 ; void encrypt(uint32_t *v) 

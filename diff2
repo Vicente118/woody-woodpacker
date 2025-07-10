@@ -5,208 +5,205 @@ test:     file format elf64-x86-64
 Disassembly of section .init:
 
 0000000000001000 <_init>:
-    1000:	97                   	xchg   %eax,%edi
-    1001:	7b de                	jnp    fe1 <__abi_tag+0xc55>
-    1003:	15 1a 4b ea b5       	adc    $0xb5ea4b1a,%eax
-    1008:	65 a5                	movsl  %gs:(%rsi),%es:(%rdi)
-    100a:	84 8a f0 5f 30 ce    	test   %cl,-0x31cfa010(%rdx)
-    1010:	4d 10 f7             	rex.WRB adc %r14b,%r15b
-    1013:	58                   	pop    %rax
-    1014:	05 e4 73 3f d0       	add    $0xd03f73e4,%eax
-    1019:	ac                   	lods   %ds:(%rsi),%al
-    101a:	31                   	.byte 0x31
+    1000:	7e a9                	jle    fab <__abi_tag+0xc1f>
+    1002:	e2 9d                	loop   fa1 <__abi_tag+0xc15>
+    1004:	2f                   	(bad)  
+    1005:	1c 67                	sbb    al,0x67
+    1007:	5b                   	pop    rbx
+    1008:	52                   	push   rdx
+    1009:	d5                   	(bad)  
+    100a:	65 e5 b9             	gs in  eax,0xb9
+    100d:	1d a3 00 86 42       	sbb    eax,0x428600a3
+    1012:	35 ae f0 3f b9       	xor    eax,0xb93ff0ae
+    1017:	71 c9                	jno    fe2 <__abi_tag+0xc56>
+    1019:	d9                   	.byte 0xd9
+    101a:	93                   	xchg   ebx,eax
 
 Disassembly of section .plt:
 
 0000000000001020 <.plt>:
-    1020:	65 a2 3a e7 52 d1 ec 	movabs %al,%gs:0xf4f457ecd152e73a
-    1027:	57 f4 f4 
-    102a:	39 90 ce 39 0f 0b    	cmp    %edx,0xb0f39ce(%rax)
-    1030:	57                   	push   %rdi
-    1031:	08 4b 50             	or     %cl,0x50(%rbx)
-    1034:	88 54 87 54          	mov    %dl,0x54(%rdi,%rax,4)
-    1038:	ad                   	lods   %ds:(%rsi),%eax
-    1039:	88 08                	mov    %cl,(%rax)
-    103b:	8d                   	(bad)  
-    103c:	fd                   	std    
-    103d:	c4                   	.byte 0xc4
-    103e:	d6                   	(bad)  
-    103f:	8a                   	.byte 0x8a
+    1020:	5b                   	pop    rbx
+    1021:	1f                   	(bad)  
+    1022:	95                   	xchg   ebp,eax
+    1023:	81 04 e4 59 ff 07 ad 	add    DWORD PTR [rsp+riz*8],0xad07ff59
+    102a:	79 f6                	jns    1022 <_init+0x22>
+    102c:	0c 29                	or     al,0x29
+    102e:	11 51 ba             	adc    DWORD PTR [rcx-0x46],edx
+    1031:	91                   	xchg   ecx,eax
+    1032:	ba 14 a3 3c 1c       	mov    edx,0x1c3ca314
+    1037:	e0 3a                	loopne 1073 <_start+0x13>
+    1039:	bb 5d 91 3f 6a       	mov    ebx,0x6a3f915d
+    103e:	0a                   	.byte 0xa
+    103f:	9d                   	popf   
 
 Disassembly of section .plt.got:
 
 0000000000001040 <.plt.got>:
-    1040:	85 16                	test   %edx,(%rsi)
-    1042:	c7                   	(bad)  
-    1043:	18 22                	sbb    %ah,(%rdx)
-    1045:	16                   	(bad)  
-    1046:	b1 72                	mov    $0x72,%cl
-    1048:	bd 16 79 84 9b       	mov    $0x9b847916,%ebp
-    104d:	7e 70                	jle    10bf <deregister_tm_clones+0x2f>
-    104f:	1a                   	.byte 0x1a
+    1040:	92                   	xchg   edx,eax
+    1041:	9a                   	(bad)  
+    1042:	f9                   	stc    
+    1043:	d6                   	(bad)  
+    1044:	4b 55                	rex.WXB push r13
+    1046:	1c 5b                	sbb    al,0x5b
+    1048:	b7 58                	mov    bh,0x58
+    104a:	21 6f 37             	and    DWORD PTR [rdi+0x37],ebp
+    104d:	cd a2                	int    0xa2
+    104f:	6a                   	.byte 0x6a
 
 Disassembly of section .plt.sec:
 
 0000000000001050 <.plt.sec>:
-    1050:	6a c0                	push   $0xffffffffffffffc0
-    1052:	6a 2a                	push   $0x2a
-    1054:	6d                   	insl   (%dx),%es:(%rdi)
-    1055:	83 8a 66 bd 16 79 84 	orl    $0xffffff84,0x7916bd66(%rdx)
-    105c:	9b                   	fwait
-    105d:	7e 70                	jle    10cf <register_tm_clones+0xf>
-    105f:	1a                   	.byte 0x1a
+    1050:	54                   	push   rsp
+    1051:	7e 8f                	jle    fe2 <__abi_tag+0xc56>
+    1053:	17                   	(bad)  
+    1054:	88 0c c5 e9 b7 58 21 	mov    BYTE PTR [rax*8+0x2158b7e9],cl
+    105b:	6f                   	outs   dx,DWORD PTR ds:[rsi]
+    105c:	37                   	(bad)  
+    105d:	cd a2                	int    0xa2
+    105f:	6a                   	.byte 0x6a
 
 Disassembly of section .text:
 
 0000000000001060 <_start>:
-    1060:	7a 29                	jp     108b <_start+0x2b>
-    1062:	50                   	push   %rax
-    1063:	ae                   	scas   %es:(%rdi),%al
-    1064:	42 79 41             	rex.X jns 10a8 <deregister_tm_clones+0x18>
-    1067:	9b                   	fwait
-    1068:	2f                   	(bad)  
-    1069:	2f                   	(bad)  
-    106a:	4c 1e                	rex.WR (bad) 
-    106c:	72 8a                	jb     ff8 <__abi_tag+0xc6c>
-    106e:	39 0b                	cmp    %ecx,(%rbx)
-    1070:	8d 75 a7             	lea    -0x59(%rbp),%esi
-    1073:	56                   	push   %rsi
-    1074:	33 9c 52 3a f4 cc 4d 	xor    0x4dccf43a(%rdx,%rdx,2),%ebx
-    107b:	ab                   	stos   %eax,%es:(%rdi)
-    107c:	a0 d3 7a 8c 58 54 55 	movabs 0xbd6b5554588c7ad3,%al
-    1083:	6b bd 
-    1085:	d9 b8 d0 8d fd 15    	fnstcw 0x15fd8dd0(%rax)
-    108b:	f5                   	cmc    
-    108c:	82                   	(bad)  
-    108d:	0b 75 d9             	or     -0x27(%rbp),%esi
+    1060:	a4                   	movs   BYTE PTR es:[rdi],BYTE PTR ds:[rsi]
+    1061:	b2 bd                	mov    dl,0xbd
+    1063:	18 c5                	sbb    ch,al
+    1065:	1f                   	(bad)  
+    1066:	7f 2d                	jg     1095 <deregister_tm_clones+0x5>
+    1068:	fa                   	cli    
+    1069:	08 5c dc f9          	or     BYTE PTR [rsp+rbx*8-0x7],bl
+    106d:	a3 c7 d7 84 c9 52 6b 	movabs ds:0x67496b52c984d7c7,eax
+    1074:	49 67 
+    1076:	af                   	scas   eax,DWORD PTR es:[rdi]
+    1077:	b4 1c                	mov    ah,0x1c
+    1079:	a2 94 24 01 24 48 4a 	movabs ds:0xac684a4824012494,al
+    1080:	68 ac 
+    1082:	52                   	push   rdx
+    1083:	fd                   	std    
+    1084:	96                   	xchg   esi,eax
+    1085:	6e                   	outs   dx,BYTE PTR ds:[rsi]
+    1086:	f3 ae                	repz scas al,BYTE PTR es:[rdi]
+    1088:	12 9a d9 57 80 f6    	adc    bl,BYTE PTR [rdx-0x97fa827]
+    108e:	56                   	push   rsi
+    108f:	3d                   	.byte 0x3d
 
 0000000000001090 <deregister_tm_clones>:
-    1090:	58                   	pop    %rax
-    1091:	d0 e4                	shl    %ah
-    1093:	df 89 51 0a 8f 5b    	fisttps 0x5b8f0a51(%rcx)
-    1099:	76 0a                	jbe    10a5 <deregister_tm_clones+0x15>
-    109b:	48 01 7c 74 f7       	add    %rdi,-0x9(%rsp,%rsi,2)
-    10a0:	b0 28                	mov    $0x28,%al
-    10a2:	78 d1                	js     1075 <_start+0x15>
-    10a4:	7f 87                	jg     102d <_init+0x2d>
-    10a6:	1f                   	(bad)  
-    10a7:	61                   	(bad)  
-    10a8:	02 d5                	add    %ch,%dl
-    10aa:	d0 bf e2 25 ad c2    	sarb   -0x3d52da1e(%rdi)
-    10b0:	46 22 33             	rex.RX and (%rbx),%r14b
-    10b3:	e2 1c                	loop   10d1 <register_tm_clones+0x11>
-    10b5:	e3 97                	jrcxz  104e <_init+0x4e>
-    10b7:	ae                   	scas   %es:(%rdi),%al
-    10b8:	61                   	(bad)  
-    10b9:	f1                   	int1   
-    10ba:	7a 99                	jp     1055 <_init+0x55>
-    10bc:	61                   	(bad)  
-    10bd:	d7                   	xlat   %ds:(%rbx)
-    10be:	60                   	(bad)  
-    10bf:	27                   	(bad)  
+    1090:	2d 13 b3 e7 4c       	sub    eax,0x4ce7b313
+    1095:	d2 65 8d             	shl    BYTE PTR [rbp-0x73],cl
+    1098:	f4                   	hlt    
+    1099:	87 04 f3             	xchg   DWORD PTR [rbx+rsi*8],eax
+    109c:	86 9a c1 4d 19 36    	xchg   BYTE PTR [rdx+0x36194dc1],bl
+    10a2:	49 1c 17             	rex.WB sbb al,0x17
+    10a5:	ca 04 5f             	retf   0x5f04
+    10a8:	e0 2d                	loopne 10d7 <register_tm_clones+0x17>
+    10aa:	12 f6                	adc    dh,dh
+    10ac:	fb                   	sti    
+    10ad:	35 2e 44 77 2d       	xor    eax,0x2d77442e
+    10b2:	d6                   	(bad)  
+    10b3:	5f                   	pop    rdi
+    10b4:	ce                   	(bad)  
+    10b5:	c9                   	leave  
+    10b6:	3e 5c                	ds pop rsp
+    10b8:	ce                   	(bad)  
+    10b9:	ed                   	in     eax,dx
+    10ba:	3f                   	(bad)  
+    10bb:	8c 17                	mov    WORD PTR [rdi],ss
+    10bd:	3e                   	ds
+    10be:	2e                   	cs
+    10bf:	75                   	.byte 0x75
 
 00000000000010c0 <register_tm_clones>:
-    10c0:	ec                   	in     (%dx),%al
-    10c1:	e3 25                	jrcxz  10e8 <register_tm_clones+0x28>
-    10c3:	95                   	xchg   %eax,%ebp
-    10c4:	62                   	(bad)  
-    10c5:	8c c7                	mov    %es,%edi
-    10c7:	28 20                	sub    %ah,(%rax)
-    10c9:	84 b4 ef a2 6c 0a 50 	test   %dh,0x500a6ca2(%rdi,%rbp,8)
-    10d0:	da 26                	fisubl (%rsi)
-    10d2:	9b                   	fwait
-    10d3:	57                   	push   %rdi
-    10d4:	a5                   	movsl  %ds:(%rsi),%es:(%rdi)
-    10d5:	09 8e e4 b0 1d f9    	or     %ecx,-0x6e24f1c(%rsi)
-    10db:	40 5a                	rex pop %rdx
-    10dd:	47 c6                	rex.RXB (bad) 
-    10df:	d7                   	xlat   %ds:(%rbx)
-    10e0:	7d 33                	jge    1115 <__do_global_dtors_aux+0x15>
-    10e2:	7b 72                	jnp    1156 <main+0xd>
-    10e4:	7a 5d                	jp     1143 <frame_dummy+0x3>
-    10e6:	9a                   	(bad)  
-    10e7:	d9 f5                	fprem1 
-    10e9:	0c c9                	or     $0xc9,%al
-    10eb:	29 92 85 42 2a 67    	sub    %edx,0x672a4285(%rdx)
-    10f1:	6f                   	outsl  %ds:(%rsi),(%dx)
-    10f2:	3e 07                	ds (bad) 
-    10f4:	02 e0                	add    %al,%ah
-    10f6:	e2 21                	loop   1119 <__do_global_dtors_aux+0x19>
-    10f8:	61                   	(bad)  
-    10f9:	f1                   	int1   
-    10fa:	7a 99                	jp     1095 <deregister_tm_clones+0x5>
-    10fc:	61                   	(bad)  
-    10fd:	d7                   	xlat   %ds:(%rbx)
-    10fe:	60                   	(bad)  
-    10ff:	27                   	(bad)  
+    10c0:	92                   	xchg   edx,eax
+    10c1:	0c 58                	or     al,0x58
+    10c3:	ea                   	(bad)  
+    10c4:	9d                   	popf   
+    10c5:	8a 87 76 b1 3d 93    	mov    al,BYTE PTR [rdi-0x6cc24e8a]
+    10cb:	b8 bf 61 8e d3       	mov    eax,0xd38e61bf
+    10d0:	ce                   	(bad)  
+    10d1:	2f                   	(bad)  
+    10d2:	e9 ba 8d 36 bb       	jmp    ffffffffbb369e91 <_end+0xffffffffbb365e79>
+    10d7:	9a                   	(bad)  
+    10d8:	91                   	xchg   ecx,eax
+    10d9:	52                   	push   rdx
+    10da:	3a 75 12             	cmp    dh,BYTE PTR [rbp+0x12]
+    10dd:	c0 37 4a             	shl    BYTE PTR [rdi],0x4a
+    10e0:	3c 3a                	cmp    al,0x3a
+    10e2:	a7                   	cmps   DWORD PTR ds:[rsi],DWORD PTR es:[rdi]
+    10e3:	37                   	(bad)  
+    10e4:	a5                   	movs   DWORD PTR es:[rdi],DWORD PTR ds:[rsi]
+    10e5:	a8 64                	test   al,0x64
+    10e7:	bb b0 b0 9a d3       	mov    ebx,0xd39ab0b0
+    10ec:	4b 5e                	rex.WXB pop r14
+    10ee:	85 56 2d             	test   DWORD PTR [rsi+0x2d],edx
+    10f1:	af                   	scas   eax,DWORD PTR es:[rdi]
+    10f2:	8f                   	(bad)  
+    10f3:	a4                   	movs   BYTE PTR es:[rdi],BYTE PTR ds:[rsi]
+    10f4:	c1 f6 b1             	shl    esi,0xb1
+    10f7:	d1 ce                	ror    esi,1
+    10f9:	ed                   	in     eax,dx
+    10fa:	3f                   	(bad)  
+    10fb:	8c 17                	mov    WORD PTR [rdi],ss
+    10fd:	3e                   	ds
+    10fe:	2e                   	cs
+    10ff:	75                   	.byte 0x75
 
 0000000000001100 <__do_global_dtors_aux>:
-    1100:	2d c3 ad 93 48       	sub    $0x4893adc3,%eax
-    1105:	8c 14 af             	mov    %ss,(%rdi,%rbp,4)
-    1108:	ec                   	in     (%dx),%al
-    1109:	4c 57                	rex.WR push %rdi
-    110b:	46 07                	rex.RX (bad) 
-    110d:	f0 02 70 b6          	lock add -0x4a(%rax),%dh
-    1111:	17                   	(bad)  
-    1112:	a6                   	cmpsb  %es:(%rdi),%ds:(%rsi)
-    1113:	c7                   	(bad)  
-    1114:	16                   	(bad)  
-    1115:	91                   	xchg   %eax,%ecx
-    1116:	e5 e4                	in     $0xe4,%eax
-    1118:	c4                   	(bad)  
-    1119:	9d                   	popf   
-    111a:	93                   	xchg   %eax,%ebx
-    111b:	70 e9                	jo     1106 <__do_global_dtors_aux+0x6>
-    111d:	5c                   	pop    %rsp
-    111e:	4b 9c                	rex.WXB pushf 
-    1120:	a1 58 ff d7 2d c6 d0 	movabs 0x7e56d0c62dd7ff58,%eax
-    1127:	56 7e 
-    1129:	3f                   	(bad)  
-    112a:	6d                   	insl   (%dx),%es:(%rdi)
-    112b:	23 8e 1d 6a 32 7e    	and    0x7e326a1d(%rsi),%ecx
-    1131:	5e                   	pop    %rsi
-    1132:	bc 40 9e 02 b9       	mov    $0xb9029e40,%esp
-    1137:	cb                   	lret   
-    1138:	61                   	(bad)  
-    1139:	f1                   	int1   
-    113a:	7a 99                	jp     10d5 <register_tm_clones+0x15>
-    113c:	61                   	(bad)  
-    113d:	d7                   	xlat   %ds:(%rbx)
-    113e:	60                   	(bad)  
-    113f:	27                   	(bad)  
+    1100:	0d e8 e8 e3 9d       	or     eax,0x9de3e8e8
+    1105:	8f c3                	pop    rbx
+    1107:	bc e3 d9 01 06       	mov    esp,0x601d9e3
+    110c:	0a aa 10 1f 75 03    	or     ch,BYTE PTR [rdx+0x3751f10]
+    1112:	3e c1 f2 7d          	ds shl edx,0x7d
+    1116:	b2 31                	mov    dl,0x31
+    1118:	0b 76 ec             	or     esi,DWORD PTR [rsi-0x14]
+    111b:	e5 c8                	in     eax,0xc8
+    111d:	26 6d                	es ins DWORD PTR es:[rdi],dx
+    111f:	8b 44 c1 cb          	mov    eax,DWORD PTR [rcx+rax*8-0x35]
+    1123:	d7                   	xlat   BYTE PTR ds:[rbx]
+    1124:	17                   	(bad)  
+    1125:	eb 15                	jmp    113c <__do_global_dtors_aux+0x3c>
+    1127:	0d 05 38 22 0e       	or     eax,0xe223805
+    112c:	f7 b1 cc f3 1b e9    	div    DWORD PTR [rcx-0x16e40c34]
+    1132:	c0 5c 72 9f a3       	rcr    BYTE PTR [rdx+rsi*2-0x61],0xa3
+    1137:	4c ce                	rex.WR (bad) 
+    1139:	ed                   	in     eax,dx
+    113a:	3f                   	(bad)  
+    113b:	8c 17                	mov    WORD PTR [rdi],ss
+    113d:	3e                   	ds
+    113e:	2e                   	cs
+    113f:	75                   	.byte 0x75
 
 0000000000001140 <frame_dummy>:
-    1140:	d2 26                	shlb   %cl,(%rsi)
-    1142:	69 f1 fd b4 bf 37    	imul   $0x37bfb4fd,%ecx,%esi
-    1148:	67                   	addr32
+    1140:	ed                   	in     eax,dx
+    1141:	2c 84                	sub    al,0x84
+    1143:	ae                   	scas   al,BYTE PTR es:[rdi]
+    1144:	eb d0                	jmp    1116 <__do_global_dtors_aux+0x16>
+    1146:	10 d2                	adc    dl,dl
+    1148:	c5                   	.byte 0xc5
 
 0000000000001149 <main>:
-    1149:	f0 14 39             	lock adc $0x39,%al
-    114c:	75 dd                	jne    112b <__do_global_dtors_aux+0x2b>
-    114e:	95                   	xchg   %eax,%ebp
-    114f:	3a ed                	cmp    %ch,%ch
-    1151:	07                   	(bad)  
-    1152:	0c f6                	or     $0xf6,%al
-    1154:	73 97                	jae    10ed <register_tm_clones+0x2d>
-    1156:	00 0e                	add    %cl,(%rsi)
-    1158:	75 fb                	jne    1155 <main+0xc>
-    115a:	9d                   	popf   
-    115b:	91                   	xchg   %eax,%ecx
-    115c:	fd                   	std    
-    115d:	90                   	nop
-    115e:	27                   	(bad)  
-    115f:	7c 36                	jl     1197 <_fini+0x2f>
-    1161:	c3                   	ret    
-    1162:	33                   	.byte 0x33
-    1163:	a0                   	.byte 0xa0
-    1164:	1c 87                	sbb    $0x87,%al
-    1166:	32                   	.byte 0x32
+    1149:	77 3a                	ja     1185 <_fini+0x1d>
+    114b:	4c d7                	rex.WR xlat BYTE PTR ds:[rbx]
+    114d:	ba 9a 3c 6f d8       	mov    edx,0xd86f3c9a
+    1152:	40 a1 d5 0e 1b c8 6c 	rex movabs eax,ds:0x7be5286cc81b0ed5
+    1159:	28 e5 7b 
+    115c:	fe                   	(bad)  
+    115d:	aa                   	stos   BYTE PTR es:[rdi],al
+    115e:	cf                   	iret   
+    115f:	8b db                	mov    ebx,ebx
+    1161:	17                   	(bad)  
+    1162:	53                   	push   rbx
+    1163:	f8                   	clc    
+    1164:	3d                   	.byte 0x3d
+    1165:	9b                   	fwait
+    1166:	1c                   	.byte 0x1c
 
 Disassembly of section .fini:
 
 0000000000001168 <_fini>:
-    1168:	97                   	xchg   %eax,%edi
-    1169:	7b de                	jnp    1149 <main>
-    116b:	15 1a 4b ea b5       	adc    $0xb5ea4b1a,%eax
-    1170:	48 83 c4 08          	add    $0x8,%rsp
+    1168:	7e a9                	jle    1113 <__do_global_dtors_aux+0x13>
+    116a:	e2 9d                	loop   1109 <__do_global_dtors_aux+0x9>
+    116c:	2f                   	(bad)  
+    116d:	1c 67                	sbb    al,0x67
+    116f:	5b                   	pop    rbx
+    1170:	48 83 c4 08          	add    rsp,0x8
     1174:	c3                   	ret    
