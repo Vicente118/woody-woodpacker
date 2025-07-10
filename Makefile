@@ -9,7 +9,7 @@ SRC_DIR = src
 OBJ_DIR = obj
 INCLUDE_DIR = inc
 
-SRC = $(wildcard $(SRC_DIR)/*.s)
+SRC = src/main.s src/elf_parser.s src/encrypt.s src/utils.s
 OBJ = $(patsubst $(SRC_DIR)/%.s, $(OBJ_DIR)/%.o, $(SRC))
 
 
