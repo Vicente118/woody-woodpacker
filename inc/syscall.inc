@@ -11,6 +11,14 @@
     syscall
 %endmacro
 
+%macro sys_read 3
+    xor     rax, rax
+    mov     rdi, %1
+    mov     rsi, %2
+    mov     rdx, %3
+    syscall
+%endmacro
+
 %macro sys_exit 1
     mov     rax, 60
     mov     rdi, %1

@@ -14,6 +14,7 @@ global modify_entry_point
 extern original_entry
 extern phdr_offset
 extern phdr_count
+extern phdr_size
 extern shdr_offset
 extern shdr_count
 extern code_segment_offset 
@@ -117,6 +118,9 @@ parse_elf_headers:
     movzx   rax, word [rbx + Elf64_Ehdr.e_shnum]
     mov     [shdr_count], rax
 
+    movzx   rax, word [rbx + Elf64_Ehdr.e_phentsize]
+    mov     [phdr_size], rax
+
     xor     rax, rax
     pop     rbx
     leave
@@ -126,6 +130,59 @@ parse_elf_headers:
 
 
 ;-------------- find_code_segment ----------------
+; 1. Loop through every program headers
+; 2. Look for segment of type PT_LOAD (Loaded in memory)
+; 3. Check that PT_LOAD has flag PF_X (Executable)
+; 4. Stores informations: code_segment_offset, code_segment_size code_segment_vaddr
+
 find_code_segment:
     push    rbp
     mov     rbp, rsp
+    push    rbx
+    push    rdx
+    
+    mov     rbx, [rdi]              ; Store file pointer in rbx
+    add     rbx, [phdr_offset]      ; Add program header offset so rbx points to them
+    xor     rcx, rcx                ; Init a counter
+    mov     rdx, [phdr_count]       ; Put number of program headers in rdx
+
+.loop_segments:
+    cmp     rcx, rdx
+    jge     .segment_not_found      ; Jump if rcx is greater or equal to rbx
+    
+    mov     eax, [rbx + Elf64_Phdr.p_type]     ; EAX because we look for the 4 least significant bytes
+    cmp     eax, PT_LOAD                       ; Check if type is PT_LOAD
+    jne     .next_segment
+
+    mov     eax, [rbx + Elf64_Phdr.p_flags]    
+    and     eax, PF_X                          ; Check if the segment is executable
+    jz      .next_segment
+
+    ; We found code segment, we can retrieve necessary informations
+
+    mov     rax, [rbx + Elf64_Phdr.p_offset]   ; Offset until code segment
+    mov     [code_segment_offset], rax
+
+    mov     rax, [rbx + Elf64_Phdr.p_filesz]   ; Size of the segment in file
+    mov     [code_segment_size], rax
+
+    mov     rax, [rbx + Elf64_Phdr.p_vaddr]    ; Virtual address of this segment
+    mov     [code_segment_vaddr], rax
+    
+    xor     rax, rax
+    jmp    .done
+
+.next_segment:
+    add     rbx, [phdr_size]
+    inc     rcx
+    jmp     .loop_segments
+
+.segment_not_found:
+    mov     rax, 1
+
+.done:
+    pop     rdx
+    pop     rbx
+    leave
+    ret
+

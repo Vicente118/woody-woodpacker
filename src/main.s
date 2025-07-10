@@ -7,17 +7,22 @@ bits 64
 extern validate_elf
 extern parse_elf_headers
 extern find_code_segment
+extern generate_tea_key
+extern get_tea_key
+extern tea_encrypt_block
 
 ; Set variables to global
 global original_entry
 global phdr_offset
 global phdr_count
+global phdr_size
 global shdr_offset
 global shdr_count
 global code_segment_offset
 global code_segment_size
 global code_segment_vaddr
 global injection_point
+global tea_key
 
 section .bss
     argc:               resq 1 ; Number of Arguments
@@ -28,12 +33,14 @@ section .bss
     original_entry:     resq 1 ; Entrypoint
     phdr_offset         resq 1
     phdr_count          resq 1
+    phdr_size           resq 1
     shdr_offset         resq 1
     shdr_count          resq 1
     code_segment_offset resq 1
     code_segment_size   resq 1
     code_segment_vaddr  resq 1
     injection_point     resq 1
+    tea_key             resb 16 ; Random 16 bytes key
 
 section .data 
 
@@ -48,7 +55,7 @@ _start:
 
     cmp     qword [argc], 2         ; Check if argc == 2
     jne     .exit_failure           ; Jump to wrong_argc if argc != 2
-    mov     rdi, [argv]             ; Store argv[0] in rdi
+    mov     rdi, [argv]             ; Store *argv in rdi
     mov     rdi, [rdi + 8]          ; Store argv[1] in rdi
 
 .open_file:
@@ -85,6 +92,17 @@ _start:
     ;; Find code segment offset
     mov     rdi, file_ptr
     call    find_code_segment
+    test    rax, rax
+    jnz     .exit_failure
+
+    call    generate_tea_key       ; Random key generation
+    test    rax, rax
+    jnz     .exit_failure
+
+    call    get_tea_key            ; Store the key in tea_key
+    mov     [tea_key], rax
+
+
 
 .close_file:
     sys_close [fd]                  ; Close fd
@@ -115,9 +133,27 @@ _start:
 ; entry       -> Entrypoint
 ; phdr_offset -> Offset where program headers begin
 ; phdr_count  -> Number of program header entries
+; phdr_size   -> Size of program header entries
 ; shdr_offset -> Offset where section headers begin
 ; shdr_count  -> Number of section header entires
 ; code_segment_offset -> Offset where the code segment begins
 ; code_segment_size   -> Size of the code segment
 ; code_segment_vaddr  -> Virtual address where the code segment will be loaded in memory
 ; injection_point     -> File offset where the decryption stub will be injected 
+
+
+
+; Original Binary Flow:
+; [ELF Headers] -> [Original Code] -> [Data] -> [Sections]
+;                       ↑
+;                  Entry point
+; After Packing:
+; [ELF Headers] -> [Encrypted Code] -> [Data] -> [Stub] -> [Sections]
+;                                                  ↑
+;                                            New entry point
+; Runtime Flow:
+; 1. OS loads binary, jumps to stub
+; 2. Stub displays "....WOODY...."
+; 3. Stub decrypts the code segment
+; 4. Stub jumps to original entry point
+; 5. Program runs normally

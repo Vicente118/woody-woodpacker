@@ -17,7 +17,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJ)
 	$(LD) $(LDFLAGS) -o $@ $(OBJ)
-	@echo "Compilation complete!"
+	@echo "Woody is ready !"
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
