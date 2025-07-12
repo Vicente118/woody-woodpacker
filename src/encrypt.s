@@ -70,7 +70,7 @@ tea_encrypt_block:
 
     add     ebx, esi
 
-    ; Loop again (32 times in total
+    ; Loop again (32 times in total)
     dec     r11d
     jnz     .encrypt_loop
 

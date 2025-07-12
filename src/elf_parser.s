@@ -7,7 +7,6 @@ bits 64
 global validate_elf
 global parse_elf_headers
 global find_code_segment
-global find_injection_point
 global modify_entry_point
 
 ; Get external declaration to this file
@@ -186,24 +185,6 @@ find_code_segment:
     pop     rbx
     leave
     ret
-
-
-;----------- FIND INJECTION POINT -----------;
-
-find_injection_point:
-    push    rbp
-    mov     rbp, rsp
-    
-    ; Inject stub at the end of the file
-    mov     rax, rdi
-    add     rax, 15
-    and     rax, ~15  ; Align size on 16 bytes for best performance
-    mov     [injection_point], rax
-
-    xor     rax, rax
-    leave
-    ret
-
 
 ;------------ MODIFY ENTRYPOINT ------------;
 modify_entry_point:

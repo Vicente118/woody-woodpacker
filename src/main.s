@@ -28,6 +28,7 @@ global code_segment_size
 global code_segment_vaddr
 global injection_point
 global file_ptr
+global file_size
 
 section .bss
     argc:                resq 1 ; Number of Arguments
@@ -130,10 +131,9 @@ _start:
     test    rax, rax
     jnz     .exit_failure
     
-    call    encrypt_code_segment   ; Encrypt the whole code segment
+    ; call    encrypt_code_segment   ; Encrypt the whole code segment
 
     mov     rdi, [file_size]
-    call    find_injection_point
     call    inject_stub
     call    modify_entry_point
 
