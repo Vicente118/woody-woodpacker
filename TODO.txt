@@ -1,4 +1,0 @@
-1. Make a copy of the binary with want to encrypt
-2. Find injection point
-3. Make decryption routine
-4. Modify entrypoint
