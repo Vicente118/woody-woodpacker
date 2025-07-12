@@ -9,7 +9,7 @@ SRC_DIR = src
 OBJ_DIR = obj
 INCLUDE_DIR = inc
 
-SRC = src/main.s src/elf_parser.s src/encrypt.s src/utils.s
+SRC = src/main.s src/elf_parser.s src/encrypt.s src/utils.s src/stub.s src/decrypt.s src/injection.s
 OBJ = $(patsubst $(SRC_DIR)/%.s, $(OBJ_DIR)/%.o, $(SRC))
 
 

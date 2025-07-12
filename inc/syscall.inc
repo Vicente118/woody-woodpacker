@@ -2,6 +2,10 @@
 
 %define O_RDONLY 0
 %define O_RDWR   2
+%define O_CREAT  100  
+%define O_TRUNC  1000
+
+%define S_IWUSR  200
 
 %macro sys_write 3  
     mov     rax, 1
@@ -54,5 +58,18 @@
     mov     r10, %3
     mov     r8,  [%4]
     xor     r9,  r9
+    syscall
+%endmacro
+
+%macro sys_munmap 2
+    mov     rax, 11
+    mov     rdi, %1
+    mov     rsi, %2
+    syscall
+%endmacro
+
+%macro sys_unlink 1
+    mov     rax, 87
+    mov     rdi, %1
     syscall
 %endmacro

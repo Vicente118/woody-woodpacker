@@ -21,7 +21,8 @@ extern code_segment_offset
 extern code_segment_size   
 extern code_segment_vaddr  
 extern injection_point
-
+extern file_ptr
+extern file_size
 
 section .data
     elf_magic:  db 0x7f, "ELF", 0    ; Magic number ELF
@@ -186,3 +187,38 @@ find_code_segment:
     leave
     ret
 
+
+;----------- FIND INJECTION POINT -----------;
+
+find_injection_point:
+    push    rbp
+    mov     rbp, rsp
+    
+    ; Inject stub at the end of the file
+    mov     rax, rdi
+    add     rax, 15
+    and     rax, ~15  ; Align size on 16 bytes for best performance
+    mov     [injection_point], rax
+
+    xor     rax, rax
+    leave
+    ret
+
+
+;------------ MODIFY ENTRYPOINT ------------;
+modify_entry_point:
+    push    rbp
+    mov     rbp, rsp 
+    push    rbx
+
+    mov     rbx, [file_ptr]  ; Save pointer to the file mapped in memory
+    mov     rax, [injection_point]
+    sub     rax, [code_segment_offset]
+    add     rax, [code_segment_vaddr]
+
+    mov     [rbx + Elf64_Ehdr.e_entry], rax 
+
+    xor     rax, rax
+    pop     rbx
+    leave
+    ret
