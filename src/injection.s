@@ -46,7 +46,6 @@ inject_stub:
     push    r14
 
 
-; TODO !
 
 
 .error:

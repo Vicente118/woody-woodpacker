@@ -9,20 +9,20 @@ decrypt_code_segment:
     push    rcx
     push    rdi
     
-    mov     rbx, rdi                 ; Adresse du segment de code
-    mov     rcx, rsi                 ; Taille du segment
-    and     rcx, ~7                  ; Aligner la taille sur 8 octets
+    mov     rbx, rdi                 ; Address of code segment
+    mov     rcx, rsi                 ; Size of segment
+    and     rcx, ~7                  ; Align size to 8 bytes
     
 .decrypt_segment_loop:
     test    rcx, rcx
     jz      .done
     
-    mov     rdi, rbx                 ; Bloc à décrypter
-    lea     rsi, [rel tea_key_embedded] ; Clé TEA
+    mov     rdi, rbx                 ; block to decrypt
+    lea     rsi, [rel tea_key_embedded] ; TEA Key
     call    tea_decrypt_block
     
-    add     rbx, 8                   ; Avancer de 8 octets
-    sub     rcx, 8                   ; Décrémenter le compteur
+    add     rbx, 8                   ; Move forward to 8 bytes
+    sub     rcx, 8                   ; Decrement counter
     jmp     .decrypt_segment_loop
     
 .done:
@@ -96,11 +96,11 @@ tea_decrypt_block:
     ; sum -= delta
     sub     edi, r9d               ; sum -= delta
     
-    ; Boucler
+    ; Loop
     dec     r11d
     jnz     .decrypt_loop
     
-    ; Stocker les résultats
+    ; Store results
     mov     [r12], eax             ; v0
     mov     [r12 + 4], ebx         ; v1
     

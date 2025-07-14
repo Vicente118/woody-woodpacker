@@ -32,7 +32,7 @@ woody_stub:
     call    decrypt_code_segment
 
     pop r13
-    ; ========= JUMP TO NEW ENTRYPOINT ========= ;
+    ; ========= JUMP TO ORIGINAL ENTRYPOINT ========= ;
     mov     rax, [rel original_entry]
     jmp     rax
 

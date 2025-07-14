@@ -127,19 +127,19 @@ _start:
     test    rax, rax
     jnz     .exit_failure
 
-    call    generate_tea_key       ; Random key generation
+    call    generate_tea_key         ; Random key generation
     test    rax, rax
     jnz     .exit_failure
     
     ; call    encrypt_code_segment   ; Encrypt the whole code segment
 
-    mov     rdi, [file_size]
-    call    inject_stub
-    call    modify_entry_point
+    ; mov     rdi, [file_size]
+    ; call    inject_stub
+    ; call    modify_entry_point
 
 .close_file:
     sys_munmap [file_ptr], [file_size]
-    sys_close [woody_fd]                  ; Close fd
+    sys_close [woody_fd]            ; Close fd
 
 .exit_success:
     sys_exit 0                      ; Exit success

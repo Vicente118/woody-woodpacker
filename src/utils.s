@@ -3,7 +3,6 @@ bits 64
 %include "inc/syscall.inc"
 
 
-
 global generate_tea_key
 global get_tea_key
 global tea_key 
