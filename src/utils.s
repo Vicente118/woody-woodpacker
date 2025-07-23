@@ -30,8 +30,6 @@ generate_tea_key:
     test    rax, rax
     js      .error
     
-    sys_write 1, tea_key, 16
-    
     sys_close rbx
     jmp    .done
 

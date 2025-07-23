@@ -37,11 +37,11 @@ woody_stub:
     sys_write 1, r13, woody_message_len
 
     ; ========= DECRYPT CODE SEGMENT ========= ;
-    mov     r8, [rel tea_key]      
-    mov     r9, [rel tea_key + 8]   
-    mov     rdi, [rel code_segment_vaddr_stub]
-    mov     rsi, [rel code_segment_size]
-    call    decrypt_code_segment
+    ; mov     r8, [rel tea_key]      
+    ; mov     r9, [rel tea_key + 8]   
+    ; mov     rdi, [rel code_segment_vaddr_stub]
+    ; mov     rsi, [rel code_segment_size]
+    ; call    decrypt_code_segment
 
     pop     r9
     pop     r8

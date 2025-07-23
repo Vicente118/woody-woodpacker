@@ -134,11 +134,10 @@ _start:
     jnz     .exit_failure
     
 
-    call    encrypt_code_segment   ; Encrypt the whole code segment
+    ; call    encrypt_code_segment   ; Encrypt the whole code segment
 
     mov     rdi, [file_size]
     call    inject_stub
-    ; call    modify_entry_point
 
 .close_file:
     sys_munmap [file_ptr], [file_size]

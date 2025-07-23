@@ -3,7 +3,6 @@ bits 64
 %include "inc/elf64.inc"
 
 global inject_stub
-global modify_entry_point
 global patch_stub
 
 ; STUB OFFSET AND ADDRESSES
@@ -13,12 +12,15 @@ extern entry_offset_stub
 extern code_segment_vaddr_offset_stub
 extern code_segment_size_offset_stub
 extern tea_key_offset_stub
+extern modify_entry_point
 
 ; Values we need to replace for placeholders from stub
 extern original_entry
 extern code_segment_vaddr
 extern code_segment_size
 extern tea_key
+extern file_ptr
+extern injection_point
 
 section data:
 section .text
@@ -33,9 +35,9 @@ inject_stub:
 
     call    patch_stub
 
-    ; call    write_stub_to_cave
+    call    write_stub_to_cave
 
-    ; call    modify_entry_point
+    call    modify_entry_point
 
     xor     rax, rax
 
@@ -55,7 +57,14 @@ patch_stub:
     push    rbx
     push    rdx
 
-    mov     rbx, woody_stub ; Save address of stub
+    lea     rbx, [woody_stub]        ; Save address of stub
+    
+    mov     rdi, rbx
+    and     rdi, ~0xFFF              ; Round to low boundary
+
+    mov     rax, 10                  ; sys_mprotect
+    mov     rdx, 7                   ; PROT_READ | PROT_WRITE | PROT_EXEC
+    syscall
 
     ; === Patch Original Entrypoint === ;
     mov     rdx, [entry_offset_stub]
@@ -80,7 +89,51 @@ patch_stub:
     mov     rax, [tea_key + 8]
     mov     [rbx + rdx + 8], rax
 
+    jmp     .done
+
+.mprotect_failed:
+    mov     rax, 60
+    mov     rdi, 1
+    syscall
+
+.done:
     pop     rdx
+    pop     rbx
+    leave
+    ret
+
+
+
+; ====== Injection of stub into target file ===== ;
+
+write_stub_to_cave:
+    push    rbp
+    mov     rbp, rsp
+    push    rbx
+    push    rcx
+    push    rdi
+    push    rsi
+
+    ; ===== DESTINATION : Point d'injection calculé =====
+    mov     rdi, [file_ptr]          ; début du fichier mappé
+    add     rdi, [injection_point]   ; + offset d'injection
+    
+    ; ===== SOURCE : Stub patché =====
+    lea     rsi, [woody_stub]        ; adresse du stub (déjà patché)
+    
+    ; ===== TAILLE : Taille du stub =====
+    mov     rcx, 0x173               ; taille exacte (0x153 + 0x20)
+
+    ; ===== COPIER LE STUB =====
+    rep     movsb                    ; Copier rcx bytes de rsi vers rdi
+    
+    ; ===== SUCCÈS =====
+    xor     rax, rax
+
+.done:
+    pop     rsi
+    pop     rdi
+    pop     rcx
     pop     rbx
     leave
     ret
