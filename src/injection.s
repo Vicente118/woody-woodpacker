@@ -58,22 +58,22 @@ patch_stub:
     mov     rbx, woody_stub ; Save address of stub
 
     ; === Patch Original Entrypoint === ;
-    mov     rdx, entry_offset_stub
+    mov     rdx, [entry_offset_stub]
     mov     rax, [original_entry]
     mov     [rbx + rdx], rax
 
     ; === Patch Code Segment Virtual Address === ; To know where we want to begin decryption in memory
-    mov     rdx, code_segment_vaddr_offset_stub
+    mov     rdx, [code_segment_vaddr_offset_stub]
     mov     rax, [code_segment_vaddr]
     mov     [rbx + rdx], rax
 
     ; === Patch Code Segment Size === ; To know how many bytes we want to decrypt
-    mov     rdx, code_segment_size_offset_stub
+    mov     rdx, [code_segment_size_offset_stub]
     mov     rax, [code_segment_size]
     mov     [rbx + rdx], rax
 
     ; === Patch TEA Key 16 bytes === ;
-    mov     rdx, tea_key_offset_stub
+    mov     rdx, [tea_key_offset_stub]
     mov     rax, [tea_key]
     mov     [rbx + rdx], rax        ; First 8 bytes of the key
 
