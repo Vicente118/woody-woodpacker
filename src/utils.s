@@ -29,7 +29,9 @@ generate_tea_key:
     sys_read rbx, tea_key, 0x10                 ; Read 16 bytes of /dev/urandom and stores it in tea_key
     test    rax, rax
     js      .error
-
+    
+    sys_write 1, tea_key, 16
+    
     sys_close rbx
     jmp    .done
 

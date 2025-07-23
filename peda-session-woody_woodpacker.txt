@@ -1,2 +1,2 @@
-break parse_elf_headers
+break patch_stub
 

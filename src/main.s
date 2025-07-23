@@ -29,6 +29,7 @@ global code_segment_vaddr
 global injection_point
 global file_ptr
 global file_size
+global new_entrypoint
 
 section .bss
     argc:                resq 1 ; Number of Arguments
@@ -38,7 +39,8 @@ section .bss
     output_fd:           resq 1 ; File descriptor of woody to be modified
     file_size:           resq 1 ; File size
     file_ptr:            resq 1 ; Pointer to the file mapped in memory
-    original_entry:      resq 1 ; Entrypoint
+    original_entry:      resq 1 ; Original entrypoint
+    new_entrypoint:      resq 1 ; New entrypoint
     phdr_offset:         resq 1
     phdr_count:          resq 1
     phdr_size:           resq 1
@@ -131,10 +133,11 @@ _start:
     test    rax, rax
     jnz     .exit_failure
     
-    ; call    encrypt_code_segment   ; Encrypt the whole code segment
 
-    ; mov     rdi, [file_size]
-    ; call    inject_stub
+    call    encrypt_code_segment   ; Encrypt the whole code segment
+
+    mov     rdi, [file_size]
+    call    inject_stub
     ; call    modify_entry_point
 
 .close_file:

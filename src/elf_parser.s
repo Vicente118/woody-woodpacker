@@ -22,6 +22,7 @@ extern code_segment_vaddr
 extern injection_point
 extern file_ptr
 extern file_size
+extern new_entrypoint
 
 section .data
     elf_magic:  db 0x7f, "ELF", 0    ; Magic number ELF
@@ -169,8 +170,20 @@ find_code_segment:
     mov     rax, [rbx + Elf64_Phdr.p_vaddr]    ; Virtual address of this segment
     mov     [code_segment_vaddr], rax
     
+    mov     rax, [code_segment_offset]
+    add     rax, [code_segment_size]
+    add     rax, 0xF
+    and     rax, ~0xF                          ; Align to 16 bytes memory addresses
+    mov     [injection_point], rax             ; Injection point at p_offset + p_filesz
+
+    mov     rax, [code_segment_vaddr]
+    add     rax, [code_segment_size]
+    add     rax, 0xF
+    and     rax, ~0xF               
+    mov     [new_entrypoint], rax              ; New entrypoint at p_vaddr + p_filesz
+
     xor     rax, rax
-    jmp    .done
+    jmp     .done
 
 .next_segment:
     add     rbx, [phdr_size]
@@ -197,7 +210,7 @@ modify_entry_point:
     sub     rax, [code_segment_offset]
     add     rax, [code_segment_vaddr]
 
-    mov     [rbx + Elf64_Ehdr.e_entry], rax 
+    mov     [rbx + Elf64_Ehdr.e_entry], rax     ; new_entrypoint = (injection_point - p_offset) + p_vaddr
 
     xor     rax, rax
     pop     rbx
