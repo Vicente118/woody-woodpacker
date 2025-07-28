@@ -13,7 +13,7 @@ extern code_segment_vaddr_offset_stub
 extern code_segment_size_offset_stub
 extern tea_key_offset_stub
 extern modify_entry_point
-
+extern injection_point_offset_stub
 ; Values we need to replace for placeholders from stub
 extern original_entry
 extern code_segment_vaddr
@@ -71,6 +71,11 @@ patch_stub:
     mov     rax, [original_entry]
     mov     [rbx + rdx], rax
 
+    ; === Patch Injection Point === ;
+    mov     rdx, [injection_point_offset_stub]
+    mov     rax, [injection_point]       ; Notre offset dans le fichier cible
+    mov     [rbx + rdx], rax
+
     ; === Patch Code Segment Virtual Address === ; To know where we want to begin decryption in memory
     mov     rdx, [code_segment_vaddr_offset_stub]
     mov     rax, [code_segment_vaddr]
@@ -122,7 +127,7 @@ write_stub_to_cave:
     lea     rsi, [woody_stub]        ; adresse du stub (déjà patché)
     
     ; ===== TAILLE : Taille du stub =====
-    mov     rcx, 0x173               ; taille exacte (0x153 + 0x20)
+    mov     rcx, 0x171               ; taille exacte (0x149 + 0x28)
 
     ; ===== COPIER LE STUB =====
     rep     movsb                    ; Copier rcx bytes de rsi vers rdi
