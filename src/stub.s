@@ -15,7 +15,7 @@ global injection_point_offset_stub
 
 section .data
 entry_offset_stub:                dq original_entry - woody_stub            ; Offset where entrypoint in stored in stub
-injection_point_offset_stub       dq injection_point_stub - woody_stub      ; Offset where tje injection point is stored in stub
+injection_point_offset_stub:       dq injection_point_stub - woody_stub      ; Offset where tje injection point is stored in stub
 code_segment_vaddr_offset_stub:   dq code_segment_vaddr_stub - woody_stub   ; Offset where code segment virtual address is stored in stub 
 code_segment_size_offset_stub:    dq code_segment_size - woody_stub         ; Offset where code segment size is stored in stub
 tea_key_offset_stub:              dq tea_key - woody_stub                   ; Offset where the key is stored in stub
@@ -34,16 +34,21 @@ woody_stub:
     push    r9
     sub     rsp, 8
 
+    lea     r10, [rel woody_stub]
+    sub     r10, [rel injection_point_stub]  ; Base address of binary
+
     lea     r13, [rel woody_message]
     ; ========= "....WOODY...." ========== ;
     sys_write 1, r13, woody_message_len
 
     ; ========= DECRYPT CODE SEGMENT ========= ;
-    ; mov     r8, [rel tea_key]      
-    ; mov     r9, [rel tea_key + 8]   
-    ; mov     rdi, [rel code_segment_vaddr_stub]
-    ; mov     rsi, [rel code_segment_size]
-    ; call    decrypt_code_segment
+    mov     r8, [rel tea_key]      
+    mov     r9, [rel tea_key + 8]   
+
+    mov     rdi, r10
+    add     rdi, [rel code_segment_vaddr_stub]  
+    mov     rsi, [rel code_segment_size]
+    call    decrypt_code_segment
     
     add     rsp, 8
     pop     r9 

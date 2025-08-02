@@ -133,10 +133,10 @@ _start:
     test    rax, rax
     jnz     .exit_failure
     
+    lea     rdi, [file_ptr]
+    add     rdi, [code_segment_offset]
+    call    encrypt_code_segment   ; Encrypt the whole code segment
 
-    ; call    encrypt_code_segment   ; Encrypt the whole code segment
-
-    mov     rdi, [file_size]
     call    inject_stub
 
 .close_file:
