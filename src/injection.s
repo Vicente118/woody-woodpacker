@@ -127,7 +127,7 @@ write_stub_to_cave:
     lea     rsi, [woody_stub]        ; adresse du stub (déjà patché)
     
     ; ===== TAILLE : Taille du stub =====
-    mov     rcx, 0x1A9               ; taille exacte
+    mov     rcx, 0xED               ; taille exacte
 
     ; ===== COPIER LE STUB =====
     rep     movsb                    ; Copier rcx bytes de rsi vers rdi

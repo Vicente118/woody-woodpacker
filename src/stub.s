@@ -10,12 +10,14 @@ global code_segment_size_offset_stub
 global tea_key_offset_stub
 global injection_point_offset_stub
 
+
 %include "inc/syscall.inc"
-%include "src/decrypt.s"
+
+extern decrypt_code_segment
 
 section .data
 entry_offset_stub:                dq original_entry - woody_stub            ; Offset where entrypoint in stored in stub
-injection_point_offset_stub:       dq injection_point_stub - woody_stub      ; Offset where tje injection point is stored in stub
+injection_point_offset_stub:      dq injection_point_stub - woody_stub      ; Offset where tje injection point is stored in stub
 code_segment_vaddr_offset_stub:   dq code_segment_vaddr_stub - woody_stub   ; Offset where code segment virtual address is stored in stub 
 code_segment_size_offset_stub:    dq code_segment_size - woody_stub         ; Offset where code segment size is stored in stub
 tea_key_offset_stub:              dq tea_key - woody_stub                   ; Offset where the key is stored in stub
