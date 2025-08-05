@@ -161,19 +161,27 @@ find_code_segment:
 
     ; We found code segment, we can retrieve necessary informations
 
+    mov     eax, [rbx + Elf64_Phdr.p_flags]    
+    or      eax, PF_W                           
+    mov     [rbx + Elf64_Phdr.p_flags], eax    ; Make segment writable
+
     mov     rax, [rbx + Elf64_Phdr.p_offset]   ; Offset until code segment
     mov     [code_segment_offset], rax
 
     mov     rax, [rbx + Elf64_Phdr.p_filesz]   ; Size of the segment in file
     mov     [code_segment_size], rax
+    add     rax, 0xea                          ; Patch p_filesz for injected code
+    mov     [rbx + Elf64_Phdr.p_filesz], rax
+
+    mov     rax, [rbx + Elf64_Phdr.p_memsz]    ; Patch p_memsz for injected code
+    add     rax, 0xea
+    mov     [rbx + Elf64_Phdr.p_memsz], rax
 
     mov     rax, [rbx + Elf64_Phdr.p_vaddr]    ; Virtual address of this segment
     mov     [code_segment_vaddr], rax
     
     mov     rax, [code_segment_offset]
-    add     rax, [code_segment_size]
-    add     rax, 0xF
-    and     rax, ~0xF                          ; Align to 16 bytes memory addresses
+    add     rax, [code_segment_size]                       
     mov     [injection_point], rax             ; Injection point at p_offset + p_filesz
 
     mov     rax, [code_segment_vaddr]

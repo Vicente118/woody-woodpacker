@@ -69,7 +69,7 @@ _start:
     mov     rdi, [rdi + 8]          ; Store argv[1] in rdi
 
 .open_file:
-    sys_open rdi, O_RDWR, 0         ; Open file argv[1] in rdi in Read Write mode
+    sys_open rdi, O_RDONLY, 0         ; Open file argv[1] in rdi in Read Write mode
     test    rax, rax                ; If rax == 0
     js      .exit_failure           ; exit
     mov     [input_fd], rax         ; Store file descriptor in fd
@@ -135,7 +135,7 @@ _start:
     
     lea     rdi, [file_ptr]
     add     rdi, [code_segment_offset]
-    call    encrypt_code_segment   ; Encrypt the whole code segment
+    ; call    encrypt_code_segment   ; Encrypt the whole code segment
 
     call    inject_stub
 

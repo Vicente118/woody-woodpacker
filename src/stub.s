@@ -6,12 +6,13 @@ global entry_offset_stub
 global tea_key_offset_stub
 global code_segment_vaddr_offset_stub 
 global code_segment_size_offset_stub  
-global code_segment_size_offset_stub
 global tea_key_offset_stub
 global injection_point_offset_stub
 
 
 %include "inc/syscall.inc"
+
+%define PF_W        0x2
 
 extern decrypt_code_segment
 
@@ -37,20 +38,21 @@ woody_stub:
     sub     rsp, 8
 
     lea     r10, [rel woody_stub]
-    sub     r10, [rel injection_point_stub]  ; Base address of binary
+
 
     lea     r13, [rel woody_message]
     ; ========= "....WOODY...." ========== ;
     sys_write 1, r13, woody_message_len
 
     ; ========= DECRYPT CODE SEGMENT ========= ;
-    mov     r8, [rel tea_key]      
-    mov     r9, [rel tea_key + 8]   
+    ; mov     r8, [rel tea_key]      
+    ; mov     r9, [rel tea_key + 8]   
 
-    mov     rdi, r10
-    add     rdi, [rel code_segment_vaddr_stub]  
-    mov     rsi, [rel code_segment_size]
-    call    decrypt_code_segment
+    ; lea     rdi, [rel woody_stub]
+    ; sub     rdi, [rel injection_point_stub]
+    ; add     rdi, [rel code_segment_vaddr_stub]
+    ; mov     rsi, [rel code_segment_size]
+    ; call    decrypt_code_segment
     
     add     rsp, 8
     pop     r9 
@@ -63,8 +65,7 @@ woody_stub:
     leave
 
     ; ========= JUMP TO ORIGINAL ENTRYPOINT ========= ;
-    lea     r10, [rel woody_stub]
-    sub     r10, [rel injection_point_stub]
+    sub     r10, [rel injection_point_stub]  ; Base address of binary
     add     r10, [rel original_entry]
     jmp     r10
 
