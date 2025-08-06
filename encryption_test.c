@@ -3,7 +3,11 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#define TEXT "Hello this text has to be encrypted and decrypted without any lose of data"
+#define TEXT "1234567812345678"
+
+extern void encrypt_code_segment(void *data);
+extern void decrypt_code_segment(void *data, size_t size, uint64_t key1, uint64_t key2);
+
 
 uint32_t KEY[4] = {771632, 56436, 153674, 923324};  // Key space for bit shifts
 
@@ -39,5 +43,18 @@ void decrypt_c(uint32_t* v)
 
 int main(void)
 {
+    char *txt = strdup(TEXT);
 
+    printf(txt);
+    printf("\n");
+
+    encrypt_code_segment(txt);
+
+    printf(txt);
+    printf("\n");
+
+    decrypt_code_segment(txt, 16, 23, 23);
+
+    printf(txt);
+    printf("\n");
 }

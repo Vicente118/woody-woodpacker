@@ -59,10 +59,10 @@ patch_stub:
 
     lea     rbx, [woody_stub]        ; Save address of stub
     
+    mov     rax, 10                  ; sys_mprotect
     mov     rdi, rbx
     and     rdi, ~0xFFF              ; Round to low boundary
-
-    mov     rax, 10                  ; sys_mprotect
+    mov     rsi, 0xea
     mov     rdx, 7                   ; PROT_READ | PROT_WRITE | PROT_EXEC
     syscall
 
