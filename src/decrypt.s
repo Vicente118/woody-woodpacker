@@ -1,9 +1,5 @@
 bits 64
 
-global decrypt_code_segment
-
-extern tea_key_embedded
-
 decrypt_code_segment:
     push    rbp
     mov     rbp, rsp
@@ -13,10 +9,6 @@ decrypt_code_segment:
     push    r12
     push    r13
 
-    mov     rax, 10                  ; mprotect()
-    mov     rdx, 3
-    syscall
-    
     mov     rbx, rdi                 ; Address of code segment
     mov     rcx, rsi                 ; Size of segment
     and     rcx, ~7                  ; Align size to 8 bytes

