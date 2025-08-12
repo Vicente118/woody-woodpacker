@@ -62,7 +62,7 @@ patch_stub:
     mov     rax, 10                  ; sys_mprotect
     mov     rdi, rbx
     and     rdi, ~0xFFF              ; Round to low boundary
-    mov     rsi, 0x274
+    mov     rsi, 0x276
     mov     rdx, 7                   ; PROT_READ | PROT_WRITE | PROT_EXEC
     syscall
 
@@ -127,7 +127,7 @@ write_stub_to_cave:
     lea     rsi, [woody_stub]        ; adresse du stub (déjà patché)
     
     ; ===== TAILLE : Taille du stub =====
-    mov     rcx, 0x274                ; taille exacte
+    mov     rcx, 0x276                ; taille exacte
 
     ; ===== COPIER LE STUB =====
     rep     movsb                    ; Copier rcx bytes de rsi vers rdi
